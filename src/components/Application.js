@@ -28,30 +28,47 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({
-      ...state,
-      appointments
-    });
+    
     return axios.put(
       `/api/appointments/${id}`,
       { interview }
       )
-      .then(response => {
-      console.log(response)
-    })
-    .catch((err) => {
-      console.log(err)
-    });
+      .then( respone => {
+        setState({
+          ...state,
+          appointments
+        })
+      }
+      )
   }
 
-  function cancelInterview(a) {
-    console.log("yeLOW")
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+  
+    return axios.delete(
+      `/api/appointments/${id}`
+    )
+    .then( response => {
+      setState({
+        ...state,
+        appointments
+      })
+    }
+    )
+    
   }
   
   const setDay = day => setState({ ...state, day });
-  const setDays = days => setState(prev => ({ ...prev, days }));
-  const setInterviewers = interviewers => setState(prev => ({...prev, interviewers}));
-  const setAppointments = appointments => setState(prev => ({...prev, appointments}));
+  // const setDays = days => setState(prev => ({ ...prev, days }));
+  // const setInterviewers = interviewers => setState(prev => ({...prev, interviewers}));
+  // const setAppointments = appointments => setState(prev => ({...prev, appointments}));
   
   useEffect(() => {
     Promise.all([
@@ -59,9 +76,7 @@ export default function Application(props) {
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
     ]).then((all) => {
-      setDays(all[0].data);
-      setAppointments(all[1].data); 
-      setInterviewers(all[2].data)
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     })
   }, []);
 
@@ -109,6 +124,8 @@ export default function Application(props) {
         <Appointment 
         key="last" 
         time="5pm"
+        interview={null}
+        interviewers={ null }
         />
       </section>
     </main>
