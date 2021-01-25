@@ -35,11 +35,7 @@ export default function Appointment(props) {
   }
 
 
-  function confirmDelete(name, interviewer) {
-    const interview = {
-      student: name,
-      interviewer
-    };
+  function confirmDelete() {
   transition(DELETING, true);
   props
   .cancelInterview(props.id)
