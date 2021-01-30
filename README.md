@@ -2,6 +2,7 @@
 
 Built to better understand React and its advantages. Uses a Postgres database and different testing packages (Storybook, Jest and Cypress). Click around to try it out! 
 
+The app allows a user to book a schedule and select their interviewer. They can then edit the existing appointment or delete it. Main effort was responsiveness between the front-end and back-end.
 
 !["default-view"](https://github.com/Luke-Berzins/Interview-Scheduler/blob/master/docs/default-view.png?raw=true)
 !["new"](https://github.com/Luke-Berzins/Interview-Scheduler/blob/master/docs/form-display.png?raw=true)
